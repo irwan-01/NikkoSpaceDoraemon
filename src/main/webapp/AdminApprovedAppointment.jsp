@@ -56,6 +56,7 @@
                             <%
     						List<Appointment> appointments = (List<Appointment>) request.getAttribute("appointments");
     						if (appointments != null && !appointments.isEmpty()) {
+SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
     						    for (Appointment appointment : appointments) {
 							%>
 
