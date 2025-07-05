@@ -5,6 +5,7 @@
 <%@ page import="customer.model.Service" %>
 <%@ page import="StaffAdmin.model.Result" %>
 <%@ page import="java.util.Optional" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +40,10 @@
                 <h2>Update Detailed Information</h2>
                 <br>
                 <div class="form-wrapper">
+                <%
+    SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
+    String formattedAppTime = (appointment.getAppTime() != null) ? timeFormatter.format(appointment.getAppTime()) : "";
+%>
                     <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
                         <input type="hidden" name="appId" value="${appointment.appId}">
 
@@ -55,7 +60,7 @@
                         <input type="text" value="${appointment.appDate}" disabled>
 
                         <label>Appointment Time:</label>
-                        <input type="text" value="${appointment.appTime}" disabled>
+                        <input type="text" value="<%= formattedAppTime %>" disabled>
 
                         <label>Status:</label>
                         <select name="status">
