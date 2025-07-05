@@ -2,6 +2,35 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
+<script>
+    function validateForm() {
+        var petName = document.getElementById("petName").value.trim();
+        var petWeight = document.getElementById("petWeight").value.trim();
+
+        // Check if fields are empty
+        if (petName === "" || petWeight === "") {
+            alert("Please fill in all fields.");
+            return false;
+        }
+
+        // Check pet name contains only letters (no digits or symbols)
+        var nameRegex = /^[A-Za-z\s]+$/;
+        if (!nameRegex.test(petName)) {
+            alert("Pet name must contain only letters.");
+            return false;
+        }
+
+        // Check weight is a positive number > 0
+        var weight = parseFloat(petWeight);
+        if (isNaN(weight) || weight <= 0) {
+            alert("Pet weight must be a number greater than 0.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
 <head>
     <meta charset="ISO-8859-1">
     <title>Add Pet</title>
