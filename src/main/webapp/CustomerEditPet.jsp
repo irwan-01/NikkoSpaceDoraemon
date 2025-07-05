@@ -6,7 +6,7 @@
     <meta charset="ISO-8859-1">
     <title>Edit Pet</title>
     <link rel="stylesheet" href="css/CustomerEditPet.css">
-<script>
+    <script>
         function validateForm() {
             var petName = document.getElementById("petName").value.trim();
             var petWeight = document.getElementById("petWeight").value.trim();
@@ -62,30 +62,29 @@
             <div class="header__content">
                 <h1 style="text-align: center;">Edit Pet</h1>
                 <h2 style="text-align: center;">Update Your Pet's Information</h2>
-                <!-- Form to Edit Pet Details -->
+                
                 <div class="form-container">
-                    <form action="PetController" method="post">
-    <input type="hidden" name="action" value="updatePet">
-    <input type="hidden" name="petID" value="<%= request.getAttribute("petID") %>">
-                        
+                    <form action="PetController" method="post" onsubmit="return validateForm()">
+                        <input type="hidden" name="action" value="updatePet">
+                        <input type="hidden" name="petID" value="<%= request.getAttribute("petID") %>">
+
                         <div class="form-group">
                             <label for="petName">Pet Name:</label>
-    						<input type="text" id="petName" name="petName" value="<%= request.getAttribute("petName") %>" required>
-
+                            <input type="text" id="petName" name="petName" value="<%= request.getAttribute("petName") %>" required>
                         </div>
+
                         <div class="form-group">
                             <label for="petWeight">Pet Weight:</label>
-    						<input type="number" id="petWeight" name="petWeight" value="<%= request.getAttribute("petWeight") %>" step="0.01" required>
-
+                            <input type="number" id="petWeight" name="petWeight" value="<%= request.getAttribute("petWeight") %>" step="0.01" required>
                         </div>
+
                         <div class="form-group">
-    						<label for="petStatus">Pet Status:</label>
-    						<select id="petStatus" name="petStatus" value="<%= request.getAttribute("petStatus") %>">
-        					<option value="Alive" <%= "Alive".equals(request.getAttribute("petStatus")) ? "selected" : "" %>>Alive</option>
-        <option value="Dead" <%= "Dead".equals(request.getAttribute("petStatus")) ? "selected" : "" %>>Dead</option>
-    					</select>
-						</div>
-						
+                            <label for="petStatus">Pet Status:</label>
+                            <select id="petStatus" name="petStatus">
+                                <option value="Alive" <%= "Alive".equals(request.getAttribute("petStatus")) ? "selected" : "" %>>Alive</option>
+                                <option value="Dead" <%= "Dead".equals(request.getAttribute("petStatus")) ? "selected" : "" %>>Dead</option>
+                            </select>
+                        </div>
 
                         <div class="button-container">
                             <button type="submit" class="btn btn-primary">Update</button>
@@ -97,7 +96,7 @@
         </div>
     </header>
 
-    <!-- Footer Section -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="main_container footer_container">
             <div class="footer_item">
