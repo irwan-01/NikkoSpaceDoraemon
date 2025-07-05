@@ -75,7 +75,7 @@
     <td><%= appointment.getAppTime() %></td>
     <td><%= appointment.getAppRemark() %></td>
     <td><%= appointment.getStatus() != null ? appointment.getStatus() : "No Status" %></td>
-    <td >
+    <td>
         <!-- View Button -->
         <form action="AppointmentController" method="get" style="display: inline;">
             <input type="hidden" name="action" value="viewAppointmentDetails">
@@ -92,14 +92,12 @@
             </form>
         <% } %>
         
-        <!-- Delete Button -->
-        <form action="AppointmentController" method="post" style="display: inline;">
+        <!-- Delete Button with Confirmation -->
+        <form action="AppointmentController" method="post" style="display: inline;" onsubmit="return confirmDelete('<%= appointment.getAppId() %>')">
             <input type="hidden" name="action" value="deleteAppointment">
             <input type="hidden" name="appId" value="<%= appointment.getAppId() %>">
             <button type="submit" class="btn-cancel">Delete</button>
         </form>
-        
-        
     </td>
 </tr>
 <%
@@ -112,10 +110,10 @@
                 </section>
                 <br />
                 <div class="header__btn">
-    <button onclick="window.location.href='AppointmentController?action=showCreateAppointmentPage'">
-        Add Appointment <span><i class="ri-arrow-right-line"></i></span>
-    </button>
-</div>
+                    <button onclick="window.location.href='AppointmentController?action=showCreateAppointmentPage'">
+                        Add Appointment <span><i class="ri-arrow-right-line"></i></span>
+                    </button>
+                </div>
 
             </div>
         </div>
@@ -162,5 +160,12 @@
             </div>
         </div>
     </footer>
+
+    <!-- Delete Confirmation Script -->
+    <script>
+        function confirmDelete(appId) {
+            return confirm("Are you sure you want to delete appointment ID " + appId + "? This action cannot be undone.");
+        }
+    </script>
 </body>
 </html>
