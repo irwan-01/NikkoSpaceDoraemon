@@ -90,7 +90,7 @@
 
                         <div class="button-group">
                             <button type="button" class="cancel-button" onclick="cancelUpdate()">Back</button>
-                            <button class="submit-button" type="submit">Update Appointment</button>
+                            <button type="submit" class="submit-button">Update Appointment</button>
                         </div>
                     </form>
                 </div>
