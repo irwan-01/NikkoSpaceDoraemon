@@ -6,6 +6,34 @@
     <meta charset="ISO-8859-1">
     <title>Edit Pet</title>
     <link rel="stylesheet" href="css/CustomerEditPet.css">
+<script>
+        function validateForm() {
+            var petName = document.getElementById("petName").value.trim();
+            var petWeight = document.getElementById("petWeight").value.trim();
+
+            // Check if fields are empty
+            if (petName === "" || petWeight === "") {
+                alert("Please fill in all fields.");
+                return false;
+            }
+
+            // Pet name: allow only letters and spaces
+            var nameRegex = /^[A-Za-z\s]+$/;
+            if (!nameRegex.test(petName)) {
+                alert("Pet name must contain only letters and spaces.");
+                return false;
+            }
+
+            // Pet weight: must be a number > 0
+            var weight = parseFloat(petWeight);
+            if (isNaN(weight) || weight <= 0) {
+                alert("Pet weight must be a number greater than 0.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
     <!-- Navigation bar -->
