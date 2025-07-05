@@ -40,10 +40,10 @@
                 <h2>Update Detailed Information</h2>
                 <br>
                 <div class="form-wrapper">
-                <%
-    SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
-    String formattedAppTime = (appointment.getAppTime() != null) ? timeFormatter.format(appointment.getAppTime()) : "";
-%>
+                    <%
+                        SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
+                        String formattedAppTime = (appointment.getAppTime() != null) ? timeFormatter.format(appointment.getAppTime()) : "";
+                    %>
                     <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
                         <input type="hidden" name="appId" value="${appointment.appId}">
 
@@ -95,9 +95,7 @@
                         <input type="text" name="other" value="${result.other}">
 
                         <div class="button-group">
-                            <!-- Back button does not submit form -->
                             <button type="button" class="cancel-button" onclick="cancelUpdate()">Back</button>
-                            <!-- Only this button triggers form submission -->
                             <button class="submit-button" type="submit">Update Appointment</button>
                         </div>
                     </form>
