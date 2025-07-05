@@ -1,11 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="StaffAdmin.model.Appointment" %>
+<%@ page import="StaffAdmin.model.Result" %>
 <%@ page import="customer.model.Pet" %>
 <%@ page import="customer.model.Service" %>
-<%@ page import="StaffAdmin.model.Result" %>
-<%@ page import="java.util.Optional" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%
+    Appointment appointment = (Appointment) request.getAttribute("appointment");
+    Result result = (Result) request.getAttribute("result");
+
+    String formattedTime = "";
+    try {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a");
+        Date time = inputFormat.parse(appointment.getAppTime());
+        formattedTime = outputFormat.format(time);
+    } catch (Exception e) {
+        formattedTime = appointment.getAppTime(); // fallback
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,67 +52,62 @@
                 <h1 style="text-align: center;">Update Appointment Result</h1>
                 <h2>Update Detailed Information</h2>
                 <br>
-                <div class="form-wrapper">
-                    <%
-                        SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
-                        String formattedAppTime = (appointment.getAppTime() != null) ? timeFormatter.format(appointment.getAppTime()) : "";
-                    %>
-                    <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
-                        <input type="hidden" name="appId" value="${appointment.appId}">
+                    <div class="form-wrapper">
+        <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
+            <input type="hidden" name="appId" value="<%= appointment.getAppId() %>">
 
-                        <label>Appointment ID:</label>
-                        <input type="text" value="${appointment.appId}" disabled>
+            <label>Appointment ID:</label>
+            <input type="text" value="<%= appointment.getAppId() %>" disabled>
 
-                        <label>Pet Name:</label>
-                        <input type="text" value="${appointment.pet.petName}" disabled>
+            <label>Pet Name:</label>
+            <input type="text" value="<%= appointment.getPet().getPetName() %>" disabled>
 
-                        <label>Service Name:</label>
-                        <input type="text" value="${appointment.service.serviceName}" disabled>
+            <label>Service Name:</label>
+            <input type="text" value="<%= appointment.getService().getServiceName() %>" disabled>
 
-                        <label>Appointment Date:</label>
-                        <input type="text" value="${appointment.appDate}" disabled>
+            <label>Appointment Date:</label>
+            <input type="text" value="<%= appointment.getAppDate() %>" disabled>
 
-                        <label>Appointment Time:</label>
-                        <input type="text" value="<%= formattedAppTime %>" disabled>
+            <label>Appointment Time:</label>
+            <input type="text" value="<%= formattedTime %>" disabled>
 
-                        <label>Status:</label>
-                        <select name="status">
-                            <option value="Pending" ${appointment.status == 'Pending' ? 'selected' : ''}>Pending</option>
-                            <option value="Approved" ${appointment.status == 'Approved' ? 'selected' : ''}>Approved</option>
-                            <option value="In Progress" ${appointment.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
-                            <option value="Completed" ${appointment.status == 'Completed' ? 'selected' : ''}>Completed</option>
-                            <option value="Rejected" ${appointment.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
-                        </select>
+            <label>Status:</label>
+            <select name="status">
+                <option value="Pending" <%= "Pending".equals(appointment.getStatus()) ? "selected" : "" %>>Pending</option>
+                <option value="Approved" <%= "Approved".equals(appointment.getStatus()) ? "selected" : "" %>>Approved</option>
+                <option value="In Progress" <%= "In Progress".equals(appointment.getStatus()) ? "selected" : "" %>>In Progress</option>
+                <option value="Completed" <%= "Completed".equals(appointment.getStatus()) ? "selected" : "" %>>Completed</option>
+                <option value="Rejected" <%= "Rejected".equals(appointment.getStatus()) ? "selected" : "" %>>Rejected</option>
+            </select>
 
-                        <h2>Update Pet Health Result</h2>
+            <h2>Update Pet Health Result</h2>
+            <label>Temperament:</label>
+            <input type="text" name="tempDescription" value="<%= result != null ? result.getTempDescription() : "" %>">
 
-                        <label>Temperament:</label>
-                        <input type="text" name="tempDescription" value="${result.tempDescription}">
+            <label>Body:</label>
+            <input type="text" name="body" value="<%= result != null ? result.getBody() : "" %>">
 
-                        <label>Body:</label>
-                        <input type="text" name="body" value="${result.body}">
+            <label>Ear:</label>
+            <input type="text" name="ear" value="<%= result != null ? result.getEar() : "" %>">
 
-                        <label>Ear:</label>
-                        <input type="text" name="ear" value="${result.ear}">
+            <label>Nose:</label>
+            <input type="text" name="nose" value="<%= result != null ? result.getNose() : "" %>">
 
-                        <label>Nose:</label>
-                        <input type="text" name="nose" value="${result.nose}">
+            <label>Tail:</label>
+            <input type="text" name="tail" value="<%= result != null ? result.getTail() : "" %>">
 
-                        <label>Tail:</label>
-                        <input type="text" name="tail" value="${result.tail}">
+            <label>Mouth:</label>
+            <input type="text" name="mouth" value="<%= result != null ? result.getMouth() : "" %>">
 
-                        <label>Mouth:</label>
-                        <input type="text" name="mouth" value="${result.mouth}">
+            <label>Other Notes:</label>
+            <input type="text" name="other" value="<%= result != null ? result.getOther() : "" %>">
 
-                        <label>Other Notes:</label>
-                        <input type="text" name="other" value="${result.other}">
-
-                        <div class="button-group">
-                            <button type="button" class="cancel-button" onclick="cancelUpdate()">Back</button>
-                            <button class="submit-button" type="submit">Update Appointment</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="button-group">
+                <button type="button" class="cancel-button" onclick="window.location.href='AppointmentController?action=goBackToAppointmentList'">Back</button>
+                <button class="submit-button" type="submit">Update Appointment</button>
+            </div>
+        </form>
+    </div>
             </div>
         </div>
     </header>
