@@ -2,6 +2,18 @@
 <!DOCTYPE html>
 <html>
 <script>
+
+document.querySelector("form").addEventListener("submit", function(event) {
+    const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
+
+    if (password !== "" || confirmPassword !== "") {
+        if (password !== confirmPassword) {
+            alert("Passwords do not match. Please try again.");
+            event.preventDefault(); // Stop form submission
+            return false;
+        }
+});
 	
 function isValidPassword(password) {
 	var regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
