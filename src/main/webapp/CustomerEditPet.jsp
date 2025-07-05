@@ -138,19 +138,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        function validateForm() {
-            var petName = document.getElementById("petName").value;
-            var petWeight = document.getElementById("petWeight").value;
-
-            if (petName === "" || petWeight === "") {
-                alert("Please fill in all fields.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </body>
 </html>
