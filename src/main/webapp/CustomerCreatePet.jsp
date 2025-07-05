@@ -2,6 +2,11 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Add Pet</title>
+    <link rel="stylesheet" href="css/addPetStyle.css">
 <script>
     function validateForm() {
         var petName = document.getElementById("petName").value.trim();
@@ -30,11 +35,6 @@
         return true;
     }
 </script>
-
-<head>
-    <meta charset="ISO-8859-1">
-    <title>Add Pet</title>
-    <link rel="stylesheet" href="css/addPetStyle.css">
 </head>
 <body>
     <!-- Navigation bar -->
