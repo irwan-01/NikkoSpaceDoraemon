@@ -90,7 +90,9 @@
                         <input type="text" name="other" value="${result.other}">
 
                         <div class="button-group">
+                            <!-- Back button does not submit form -->
                             <button type="button" class="cancel-button" onclick="cancelUpdate()">Back</button>
+                            <!-- Only this button triggers form submission -->
                             <button class="submit-button" type="submit">Update Appointment</button>
                         </div>
                     </form>
