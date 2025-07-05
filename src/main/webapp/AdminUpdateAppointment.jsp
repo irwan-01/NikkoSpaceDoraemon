@@ -4,22 +4,7 @@
 <%@ page import="customer.model.Pet" %>
 <%@ page import="customer.model.Service" %>
 <%@ page import="StaffAdmin.model.Result" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%
-    Appointment appointment = (Appointment) request.getAttribute("appointment");
-    Result result = (Result) request.getAttribute("result");
-
-    String formattedTime = "";
-    try {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("hh:mm a");
-        Date time = inputFormat.parse(appointment.getAppTime());
-        formattedTime = outputFormat.format(time);
-    } catch (Exception e) {
-        formattedTime = appointment.getAppTime();
-    }
-%>
+<%@ page import="java.util.Optional" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,12 +18,15 @@
             <div class="nav__logo">
                 <a href="#">NikkoSpace</a>
             </div>
+            <div class="nav__menu__btn" id="menu-btn">
+                <i class="ri-menu-line"></i>
+            </div>
         </div>
         <ul class="nav__links" id="nav-links">
             <li><a href="AppointmentController?action=getPendingAppointments">Appointments</a></li>
             <li><a href="CustomerController?action=listCustomer">Customer</a></li>
-            <li><a href="ServiceController?action=listServices">Service</a></li>
-            <li><a href="StaffAdminController?action=listStaff">Staff</a></li>
+            <li><a href="ServiceController?action=listServices">Service</a></li> 
+            <li><a href="StaffAdminController?action=listStaff">Staff</a></li> 
             <li><a href="StaffAdminController?action=getProfile">Profile</a></li>
             <li><a href="StaffAdminController?action=logout">Logout</a></li>
         </ul>
@@ -52,57 +40,59 @@
                 <br>
                 <div class="form-wrapper">
                     <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
-                        <input type="hidden" name="appId" value="<%= appointment.getAppId() %>">
+                        <input type="hidden" name="appId" value="${appointment.appId}">
 
                         <label>Appointment ID:</label>
-                        <input type="text" value="<%= appointment.getAppId() %>" disabled>
+                        <input type="text" value="${appointment.appId}" disabled>
 
                         <label>Pet Name:</label>
-                        <input type="text" value="<%= appointment.getPet().getPetName() %>" disabled>
+                        <input type="text" value="${appointment.pet.petName}" disabled>
 
                         <label>Service Name:</label>
-                        <input type="text" value="<%= appointment.getService().getServiceName() %>" disabled>
+                        <input type="text" value="${appointment.service.serviceName}" disabled>
 
                         <label>Appointment Date:</label>
-                        <input type="text" value="<%= appointment.getAppDate() %>" disabled>
+                        <input type="text" value="${appointment.appDate}" disabled>
 
                         <label>Appointment Time:</label>
-                        <input type="text" value="<%= formattedTime %>" disabled>
+                        <input type="text" value="${appointment.appTime}" disabled>
 
                         <label>Status:</label>
                         <select name="status">
-                            <option value="Pending" <%= "Pending".equals(appointment.getStatus()) ? "selected" : "" %>>Pending</option>
-                            <option value="Approved" <%= "Approved".equals(appointment.getStatus()) ? "selected" : "" %>>Approved</option>
-                            <option value="In Progress" <%= "In Progress".equals(appointment.getStatus()) ? "selected" : "" %>>In Progress</option>
-                            <option value="Completed" <%= "Completed".equals(appointment.getStatus()) ? "selected" : "" %>>Completed</option>
-                            <option value="Rejected" <%= "Rejected".equals(appointment.getStatus()) ? "selected" : "" %>>Rejected</option>
+                            <option value="Pending" ${appointment.status == 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Approved" ${appointment.status == 'Approved' ? 'selected' : ''}>Approved</option>
+                            <option value="In Progress" ${appointment.status == 'In Progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="Completed" ${appointment.status == 'Completed' ? 'selected' : ''}>Completed</option>
+                            <option value="Rejected" ${appointment.status == 'Rejected' ? 'selected' : ''}>Rejected</option>
                         </select>
 
                         <h2>Update Pet Health Result</h2>
 
                         <label>Temperament:</label>
-                        <input type="text" name="tempDescription" value="<%= result != null ? result.getTempDescription() : "" %>">
+                        <input type="text" name="tempDescription" value="${result.tempDescription}">
 
                         <label>Body:</label>
-                        <input type="text" name="body" value="<%= result != null ? result.getBody() : "" %>">
+                        <input type="text" name="body" value="${result.body}">
 
                         <label>Ear:</label>
-                        <input type="text" name="ear" value="<%= result != null ? result.getEar() : "" %>">
+                        <input type="text" name="ear" value="${result.ear}">
 
                         <label>Nose:</label>
-                        <input type="text" name="nose" value="<%= result != null ? result.getNose() : "" %>">
+                        <input type="text" name="nose" value="${result.nose}">
 
                         <label>Tail:</label>
-                        <input type="text" name="tail" value="<%= result != null ? result.getTail() : "" %>">
+                        <input type="text" name="tail" value="${result.tail}">
 
                         <label>Mouth:</label>
-                        <input type="text" name="mouth" value="<%= result != null ? result.getMouth() : "" %>">
+                        <input type="text" name="mouth" value="${result.mouth}">
 
                         <label>Other Notes:</label>
-                        <input type="text" name="other" value="<%= result != null ? result.getOther() : "" %>">
+                        <input type="text" name="other" value="${result.other}">
 
                         <div class="button-group">
+                            <!-- Back button does not submit form -->
                             <button type="button" class="cancel-button" onclick="cancelUpdate()">Back</button>
+                            <!-- Only this button triggers form submission -->
                             <button class="submit-button" type="submit">Update Appointment</button>
                         </div>
                     </form>
@@ -114,7 +104,8 @@
     <footer class="footer">
         <div class="main_container footer_container">
             <div class="footer_item">
-                <img src="images/nikkospacelogo.png" alt="" style="max-width: 35%; height: auto; margin: 0 45%; display: block;">
+                <img src="images/nikkospacelogo.png" alt=""
+                    style="max-width: 35%; height: auto; margin: 0 45%; display: block;">
                 <div class="footer_p">Your Pets is Our Priority</div>
             </div>
             <div class="footer_item">
