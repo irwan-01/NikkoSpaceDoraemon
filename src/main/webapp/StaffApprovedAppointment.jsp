@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List" %>
 <%@ page import="StaffAdmin.model.Appointment"%>
+<%@ page import="java.text.SimpleDateFormat" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +55,7 @@
                             <%
     						List<Appointment> appointments = (List<Appointment>) request.getAttribute("appointments");
     						if (appointments != null && !appointments.isEmpty()) {
+						SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
     						    for (Appointment appointment : appointments) {
 							%>
 
@@ -62,7 +64,7 @@
                                 <td><%= appointment.getPetName() %></td>
                                 <td><%= appointment.getServiceName() %></td>
                                 <td><%= appointment.getAppDate() %></td>
-                                <td><%= appointment.getAppTime() %></td>
+                                <td><%= timeFormat.format(appointment.getAppTime()) %></td>
                                 <td><%= appointment.getAppRemark() %></td>
                                 <td id="status-<%= appointment.getAppId() %>"><%= appointment.getStatus() %></td>
                                 <td id="actions-<%= appointment.getAppId() %>">
