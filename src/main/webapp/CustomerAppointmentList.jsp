@@ -3,6 +3,7 @@
 <%@ page import="StaffAdmin.model.Appointment" %>
 <%@ page import="StaffAdmin.model.Service" %>
 <%@ page import="customer.model.Pet" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,6 +66,7 @@
 </tr>
 <%
     } else {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
         for (Appointment appointment : appointments) {
 %>
 <tr>
@@ -72,7 +74,7 @@
     <td><%= appointment.getPet() != null ? appointment.getPet().getPetName() : "No Pet" %></td>
     <td><%= appointment.getService() != null ? appointment.getService().getServiceName() : "No Service" %></td>
     <td><%= appointment.getAppDate() %></td>
-    <td><%= appointment.getAppTime() %></td>
+    <td><%= timeFormat.format(appointment.getAppTime()) %></td>
     <td><%= appointment.getAppRemark() %></td>
     <td><%= appointment.getStatus() != null ? appointment.getStatus() : "No Status" %></td>
     <td>
