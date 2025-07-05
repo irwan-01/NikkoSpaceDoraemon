@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@ page import="StaffAdmin.model.Appointment" %>
-<%@ page import="StaffAdmin.model.Result" %>
 <%@ page import="customer.model.Pet" %>
 <%@ page import="customer.model.Service" %>
+<%@ page import="StaffAdmin.model.Result" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%
@@ -16,7 +17,7 @@
         Date time = inputFormat.parse(appointment.getAppTime());
         formattedTime = outputFormat.format(time);
     } catch (Exception e) {
-        formattedTime = appointment.getAppTime(); // fallback
+        formattedTime = appointment.getAppTime();
     }
 %>
 <!DOCTYPE html>
@@ -32,15 +33,12 @@
             <div class="nav__logo">
                 <a href="#">NikkoSpace</a>
             </div>
-            <div class="nav__menu__btn" id="menu-btn">
-                <i class="ri-menu-line"></i>
-            </div>
         </div>
         <ul class="nav__links" id="nav-links">
             <li><a href="AppointmentController?action=getPendingAppointments">Appointments</a></li>
             <li><a href="CustomerController?action=listCustomer">Customer</a></li>
-            <li><a href="ServiceController?action=listServices">Service</a></li> 
-            <li><a href="StaffAdminController?action=listStaff">Staff</a></li> 
+            <li><a href="ServiceController?action=listServices">Service</a></li>
+            <li><a href="StaffAdminController?action=listStaff">Staff</a></li>
             <li><a href="StaffAdminController?action=getProfile">Profile</a></li>
             <li><a href="StaffAdminController?action=logout">Logout</a></li>
         </ul>
@@ -52,62 +50,63 @@
                 <h1 style="text-align: center;">Update Appointment Result</h1>
                 <h2>Update Detailed Information</h2>
                 <br>
-                    <div class="form-wrapper">
-        <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
-            <input type="hidden" name="appId" value="<%= appointment.getAppId() %>">
+                <div class="form-wrapper">
+                    <form action="AppointmentController?action=updateAppointmentAndResult" method="post">
+                        <input type="hidden" name="appId" value="<%= appointment.getAppId() %>">
 
-            <label>Appointment ID:</label>
-            <input type="text" value="<%= appointment.getAppId() %>" disabled>
+                        <label>Appointment ID:</label>
+                        <input type="text" value="<%= appointment.getAppId() %>" disabled>
 
-            <label>Pet Name:</label>
-            <input type="text" value="<%= appointment.getPet().getPetName() %>" disabled>
+                        <label>Pet Name:</label>
+                        <input type="text" value="<%= appointment.getPet().getPetName() %>" disabled>
 
-            <label>Service Name:</label>
-            <input type="text" value="<%= appointment.getService().getServiceName() %>" disabled>
+                        <label>Service Name:</label>
+                        <input type="text" value="<%= appointment.getService().getServiceName() %>" disabled>
 
-            <label>Appointment Date:</label>
-            <input type="text" value="<%= appointment.getAppDate() %>" disabled>
+                        <label>Appointment Date:</label>
+                        <input type="text" value="<%= appointment.getAppDate() %>" disabled>
 
-            <label>Appointment Time:</label>
-            <input type="text" value="<%= formattedTime %>" disabled>
+                        <label>Appointment Time:</label>
+                        <input type="text" value="<%= formattedTime %>" disabled>
 
-            <label>Status:</label>
-            <select name="status">
-                <option value="Pending" <%= "Pending".equals(appointment.getStatus()) ? "selected" : "" %>>Pending</option>
-                <option value="Approved" <%= "Approved".equals(appointment.getStatus()) ? "selected" : "" %>>Approved</option>
-                <option value="In Progress" <%= "In Progress".equals(appointment.getStatus()) ? "selected" : "" %>>In Progress</option>
-                <option value="Completed" <%= "Completed".equals(appointment.getStatus()) ? "selected" : "" %>>Completed</option>
-                <option value="Rejected" <%= "Rejected".equals(appointment.getStatus()) ? "selected" : "" %>>Rejected</option>
-            </select>
+                        <label>Status:</label>
+                        <select name="status">
+                            <option value="Pending" <%= "Pending".equals(appointment.getStatus()) ? "selected" : "" %>>Pending</option>
+                            <option value="Approved" <%= "Approved".equals(appointment.getStatus()) ? "selected" : "" %>>Approved</option>
+                            <option value="In Progress" <%= "In Progress".equals(appointment.getStatus()) ? "selected" : "" %>>In Progress</option>
+                            <option value="Completed" <%= "Completed".equals(appointment.getStatus()) ? "selected" : "" %>>Completed</option>
+                            <option value="Rejected" <%= "Rejected".equals(appointment.getStatus()) ? "selected" : "" %>>Rejected</option>
+                        </select>
 
-            <h2>Update Pet Health Result</h2>
-            <label>Temperament:</label>
-            <input type="text" name="tempDescription" value="<%= result != null ? result.getTempDescription() : "" %>">
+                        <h2>Update Pet Health Result</h2>
 
-            <label>Body:</label>
-            <input type="text" name="body" value="<%= result != null ? result.getBody() : "" %>">
+                        <label>Temperament:</label>
+                        <input type="text" name="tempDescription" value="<%= result != null ? result.getTempDescription() : "" %>">
 
-            <label>Ear:</label>
-            <input type="text" name="ear" value="<%= result != null ? result.getEar() : "" %>">
+                        <label>Body:</label>
+                        <input type="text" name="body" value="<%= result != null ? result.getBody() : "" %>">
 
-            <label>Nose:</label>
-            <input type="text" name="nose" value="<%= result != null ? result.getNose() : "" %>">
+                        <label>Ear:</label>
+                        <input type="text" name="ear" value="<%= result != null ? result.getEar() : "" %>">
 
-            <label>Tail:</label>
-            <input type="text" name="tail" value="<%= result != null ? result.getTail() : "" %>">
+                        <label>Nose:</label>
+                        <input type="text" name="nose" value="<%= result != null ? result.getNose() : "" %>">
 
-            <label>Mouth:</label>
-            <input type="text" name="mouth" value="<%= result != null ? result.getMouth() : "" %>">
+                        <label>Tail:</label>
+                        <input type="text" name="tail" value="<%= result != null ? result.getTail() : "" %>">
 
-            <label>Other Notes:</label>
-            <input type="text" name="other" value="<%= result != null ? result.getOther() : "" %>">
+                        <label>Mouth:</label>
+                        <input type="text" name="mouth" value="<%= result != null ? result.getMouth() : "" %>">
 
-            <div class="button-group">
-                <button type="button" class="cancel-button" onclick="window.location.href='AppointmentController?action=goBackToAppointmentList'">Back</button>
-                <button class="submit-button" type="submit">Update Appointment</button>
-            </div>
-        </form>
-    </div>
+                        <label>Other Notes:</label>
+                        <input type="text" name="other" value="<%= result != null ? result.getOther() : "" %>">
+
+                        <div class="button-group">
+                            <button type="button" class="cancel-button" onclick="cancelUpdate()">Back</button>
+                            <button class="submit-button" type="submit">Update Appointment</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </header>
@@ -115,8 +114,7 @@
     <footer class="footer">
         <div class="main_container footer_container">
             <div class="footer_item">
-                <img src="images/nikkospacelogo.png" alt=""
-                    style="max-width: 35%; height: auto; margin: 0 45%; display: block;">
+                <img src="images/nikkospacelogo.png" alt="" style="max-width: 35%; height: auto; margin: 0 45%; display: block;">
                 <div class="footer_p">Your Pets is Our Priority</div>
             </div>
             <div class="footer_item">
